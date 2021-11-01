@@ -31,6 +31,7 @@ export default class App extends Component {
           <div className="col-xs-6">
             <div className="panel">
               <div className="panel-body">
+								{/* 注册路由 */}
                 <Switch>
                   <Route path="/about" component={About}/>
                   <Route path="/home" component={Home}/>
