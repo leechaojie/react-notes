@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import qs from "querystring";
+// import qs from "querystring";
 
 const detailData = [
     {id: '01', content: '你好'},
@@ -15,7 +15,13 @@ export default class Detail extends Component {
 
     // 接收 search 参数
     const {search} = this.props.location
-    const {id, title} = qs.parse(search.slice(1))
+
+    // qs 已经弃用，推荐使用 URLSearchParams
+    // const {id, title} = qs.parse(search.slice(1))
+
+    const params = new URLSearchParams(search)
+    const id = params.get('id')
+    const title = params.get('title')
 
     const findResult = detailData.find((item) => {
         return item.id === id
