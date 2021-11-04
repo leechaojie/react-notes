@@ -13,7 +13,7 @@ export default function count(preState = initialState, action) {
   console.log('payload', payload);
   // 判断 action 的 type
   switch (type) {
-    case 'INCREMENT': // 加\
+    case 'INCREMENT': // 加
       return preState += payload;    
     case 'DECREMENT': // 减
       return preState -= payload;
