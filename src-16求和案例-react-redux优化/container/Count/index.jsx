@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
 
+// 引入 comment 组件， 用于连接 ui 组件与 redux
+import { connect } from 'react-redux';
+
+// 引入 action
+import { createIncrementAction, createDecrementAction, createIncrementAsyncAction } from '../../redux/actions/count';
+
+// 定义 ui 组件
 class Count extends Component {
 
   // 加法
@@ -46,4 +53,15 @@ class Count extends Component {
   }
 }
 
-export default Count;
+// 创建并暴露 count 的容器组件
+export default connect(
+	// 映射状态
+	state => ({ count: state }),
+	// 映射操作状态的方法
+	// mapDispatchToProps 也可以是一个对象
+	{
+		add: createIncrementAction,
+		sub: createDecrementAction,
+		addAsync: createIncrementAsyncAction,
+	}
+)(Count);

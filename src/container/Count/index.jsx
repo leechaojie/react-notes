@@ -1,36 +1,67 @@
-// 引入 count 组件
-import CountUI from '../../components/Count'
+import React, { Component } from 'react';
 
 // 引入 comment 组件， 用于连接 ui 组件与 redux
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
 // 引入 action
-import { createIncrementAction, createDecrementAction, createIncrementAsyncAction } from '../../redux/actions/count'
+import { createIncrementAction, createDecrementAction, createIncrementAsyncAction } from '../../redux/actions/count';
 
-// 返回值作为状态传递给了 ui 组件
-function mapStateToProps(state) {
-	return {
-		count: state
-	}
-}
+// 定义 ui 组件
+class Count extends Component {
 
-// 返回值作为操作组件传递给了 ui 组件
-function mapDispatchToProps(dispatch) {
-	return {
-		// 通知 redux 执行加法操作
-		add: payload => dispatch(createIncrementAction(payload)),
-		// 通知 redux 执行减法操作
-		sub: payload => dispatch(createDecrementAction(payload)),
-		// 通知 redux 执行异步加法操作
-		addAsync: (payload, delay) => dispatch(createIncrementAsyncAction(payload, delay))
-	}
+  // 加法
+  increment = () => {
+    const {value} = this.selectNumber
+    this.props.add(parseInt(value));
+  }
+
+  // 减
+  decrement = () => {
+    const {value} = this.selectNumber
+    this.props.sub(parseInt(value));
+  }
+
+  // 奇数再加
+  incrementIfOdd = () => {
+    const {value} = this.selectNumber
+    if (this.props.count % 2 === 1) {
+      this.props.add(parseInt(value));
+    }
+  }
+
+  // 异步加
+  incrementAsync = () => {
+    const {value} = this.selectNumber
+    this.props.addAsync(parseInt(value), 500);
+  }
+  render() {
+    console.log(this.props);
+    return (
+      <div>
+        <h1>当前求和为：{this.props.count}</h1>
+        <select ref={c => this.selectNumber = c} id="" style={{marginLeft: '10px '}}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+        <button onClick={this.increment} style={{marginLeft: '10px'}}>+</button>
+        <button onClick={this.decrement} style={{marginLeft: '10px'}}>-</button>
+        <button onClick={this.incrementIfOdd} style={{marginLeft: '10px'}}>当前求和为奇数</button>
+        <button onClick={this.incrementAsync} style={{marginLeft: '10px'}}>异步加</button>
+      </div>
+    );
+  }
 }
 
 // 创建并暴露 count 的容器组件
 export default connect(
-  // 将 state 中的 count 数据传递给 count 组件
-  mapStateToProps,
-  // 将 dispatch 中的方法传递给 count 组件
-  mapDispatchToProps
-
-)(CountUI)
+	// 映射状态
+	state => ({ count: state }),
+	// 映射操作状态的方法
+	// mapDispatchToProps 也可以是一个对象
+	{
+		add: createIncrementAction,
+		sub: createDecrementAction,
+		addAsync: createIncrementAsyncAction,
+	}
+)(Count);
