@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { nanoid } from 'nanoid'
 import { connect } from 'react-redux'
-import { createAddPersonAction } from '../../redux/actions/person'
+import { addPerson } from '../../redux/actions/person'
 
 class Person extends Component {
 
@@ -10,7 +10,7 @@ class Person extends Component {
   addPerson = () => {
     const { nameNode: {value: name}, ageNode: {value: age} } = this
     const personsObj = {id: nanoid(), name, age}
-    this.props.add(personsObj)
+    this.props.addPerson(personsObj)
     this.nameNode.value = ''
     this.ageNode.value = ''
   }
@@ -44,7 +44,7 @@ export default connect(
     count: state.count
   }), // 映射状态
   {
-    add: createAddPersonAction
+    addPerson
   }
 )(Person)
 

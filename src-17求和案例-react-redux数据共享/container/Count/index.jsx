@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // 引入 action
-import { createIncrementAction, createDecrementAction, createIncrementAsyncAction } from '../../redux/actions/count';
+import { increment, decrement, incrementAsync } from '../../redux/actions/count';
 
 // 定义 ui 组件
 class Count extends Component {
@@ -12,27 +12,27 @@ class Count extends Component {
   // 加法
   increment = () => {
     const {value} = this.selectNumber
-    this.props.add(parseInt(value));
+    this.props.increment(parseInt(value));
   }
 
   // 减
   decrement = () => {
     const {value} = this.selectNumber
-    this.props.sub(parseInt(value));
+    this.props.decrement(parseInt(value));
   }
 
   // 奇数再加
   incrementIfOdd = () => {
     const {value} = this.selectNumber
     if (this.props.count % 2 === 1) {
-      this.props.add(parseInt(value));
+      this.props.increment(parseInt(value));
     }
   }
 
   // 异步加
   incrementAsync = () => {
     const {value} = this.selectNumber
-    this.props.addAsync(parseInt(value), 500);
+    this.props.incrementAsync(parseInt(value), 500);
   }
   render() {
     console.log(this.props);
@@ -64,8 +64,8 @@ export default connect(
 	// 映射操作状态的方法
 	// mapDispatchToProps 也可以是一个对象
 	{
-		add: createIncrementAction,
-		sub: createDecrementAction,
-		addAsync: createIncrementAsyncAction,
+		increment,
+		decrement,
+		incrementAsync,
 	}
 )(Count);
