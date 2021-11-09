@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import './index.css'
 
+// 父子组件使用 props 传递数据
+// 通过 React.createContext() 创建上下文
+// 后代组件通过 Provider（类式组件） / Consumer（函数式组件） 接收上下文
+
 // 创建 context 对象
 const UserNameContext = React.createContext()
 // 解构 Provider
