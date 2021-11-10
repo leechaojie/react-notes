@@ -7,7 +7,7 @@ import './index.css'
 // 
 
 // 父组件
-class ContextPage extends Component {
+class Parent extends Component {
 
   state = {username: 'tom', age: 18}
 
@@ -76,5 +76,5 @@ class D extends Component {
 }
 
 
-export default ContextPage;
+export default Parent;
 
